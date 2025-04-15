@@ -38,7 +38,7 @@ struct ContentView: View {
 
                 Text("Voltage: \(bt.voltage, specifier: "%.2f") V")
                 Text("Battery: \(bt.battery)%")
-                Text("Speed: \(bt.speed, specifier: "%.1f") km/h")
+                Text("Speed: \(bt.speed, specifier: "%.01f") miles/h")
                 Text("Trip: \(bt.totalDistance, specifier: "%.3f") km")
                 Text("Raw: \(bt.rawHex)")
                     .font(.footnote)
