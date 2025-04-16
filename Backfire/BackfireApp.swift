@@ -12,6 +12,7 @@ struct BackfireApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(BluetoothManager.shared)
         }
     }
 }

@@ -8,46 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var bt = BluetoothManager()
-    @State private var isScanning = true
-    @State private var searchText = ""
-
+    @AppStorage("isOnboardingComplete") var isOnboardingComplete = false
+    @AppStorage("lastConnectedDevice") var lastConnectedDeviceID: String?
+    
     var body: some View {
-        VStack(spacing: 20) {
-            if bt.targetPeripheral == nil {
-                Text("Select Your Board")
-                    .font(.headline)
-
-                TextField("Search...", text: $searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-
-                List(bt.discoveredDevices.filter { device in
-                    let name = device.name ?? ""
-                    return !name.isEmpty &&
-                           name != "Unnamed" &&
-                           (searchText.isEmpty || name.localizedCaseInsensitiveContains(searchText))
-                }, id: \.identifier) { device in
-                    Button(device.name ?? "Unnamed") {
-                        bt.connectToDevice(device)
-                    }
+        NavigationStack {
+            Group {
+                if isOnboardingComplete {
+                    MainTabView()
+                        .environmentObject(BluetoothManager.shared)
+                        .onAppear {
+                            attemptReconnectToSavedDevice()
+                        }
+                } else {
+                    OnboardingView(isOnboardingComplete: $isOnboardingComplete)
+                        .environmentObject(BluetoothManager.shared)
                 }
-            } else {
-                Text("Connected to: \(bt.targetPeripheral?.name ?? "Unknown")")
-                    .font(.headline)
-
-                Text("Voltage: \(bt.voltage, specifier: "%.2f") V")
-                Text("Battery: \(bt.battery)%")
-                Text("Speed: \(bt.speed, specifier: "%.01f") miles/h")
-                Text("Trip: \(bt.rideDistance, specifier: "%.3f") miles")
-                Text("Odo: \(bt.totalDistance, specifier: "%.3f") miles")
-                Text("Gear: \(bt.gear)")
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
+    }
+    
+    private func attemptReconnectToSavedDevice() {
+        guard let deviceID = lastConnectedDeviceID,
+              let uuid = UUID(uuidString: deviceID) else { return }
+        
+        BluetoothManager.shared.reconnectToSavedDevice(uuid: uuid)
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(BluetoothManager.shared)
+    }
 }
