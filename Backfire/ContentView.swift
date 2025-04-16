@@ -39,14 +39,9 @@ struct ContentView: View {
                 Text("Voltage: \(bt.voltage, specifier: "%.2f") V")
                 Text("Battery: \(bt.battery)%")
                 Text("Speed: \(bt.speed, specifier: "%.01f") miles/h")
-                Text("Trip: \(bt.totalDistance, specifier: "%.3f") km")
-                Text("Raw: \(bt.rawHex)")
-                    .font(.footnote)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                Text("Decoded: \(bt.lastTelemetry)")
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
+                Text("Trip: \(bt.rideDistance, specifier: "%.3f") miles")
+                Text("Odo: \(bt.totalDistance, specifier: "%.3f") miles")
+                Text("Gear: \(bt.gear)")
             }
         }
         .padding()
