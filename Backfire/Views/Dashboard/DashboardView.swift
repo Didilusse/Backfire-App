@@ -34,41 +34,60 @@ struct DashboardView: View {
                 }
                 .padding()
             }
-        }
-        .overlay(alignment: .bottom) {
-            if bluetoothManager.targetPeripheral == nil {
-                ReconnectButton()
+            .overlay(alignment: .bottom) {
+                if bluetoothManager.targetPeripheral == nil {
+                    ReconnectButton()
+                }
             }
+            Button {
+                if bluetoothManager.isRideActive {
+                    bluetoothManager.stopCurrentRide()
+                } else {
+                    bluetoothManager.startNewRide()
+                }
+            } label: {
+                Text(bluetoothManager.isRideActive ? "Stop Ride" : "Start Ride")
+                    .font(.title2)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(bluetoothManager.isRideActive ? Color.red : Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding()
         }
-    }
-    
-    @ViewBuilder
-    private func ConnectionStatusIndicator() -> some View {
-        HStack {
-            Circle()
-                .fill(bluetoothManager.targetPeripheral != nil ? Color.green : Color.red)
-                .frame(width: 10, height: 10)
-            
-            Text(bluetoothManager.targetPeripheral?.name ?? "Disconnected")
-                .font(.subheadline)
-        }
-    }
-    
-    @ViewBuilder
-    private func ReconnectButton() -> some View {
-        Button {
-            bluetoothManager.startScan()
-        } label: {
-            Label("Reconnect Board", systemImage: "arrow.clockwise")
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-        }
-        .padding()
     }
 }
+
+@ViewBuilder
+private func ConnectionStatusIndicator() -> some View {
+    let bluetoothManager = BluetoothManager.shared
+    HStack {
+        Circle()
+            .fill(bluetoothManager.targetPeripheral != nil ? Color.green : Color.red)
+            .frame(width: 10, height: 10)
+        
+        Text(bluetoothManager.targetPeripheral?.name ?? "Disconnected")
+            .font(.subheadline)
+    }
+}
+
+@ViewBuilder
+private func ReconnectButton() -> some View {
+    let bluetoothManager = BluetoothManager.shared
+    Button {
+        bluetoothManager.startScan()
+    } label: {
+        Label("Reconnect Board", systemImage: "arrow.clockwise")
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+    }
+    .padding()
+}
+
 
 
 #Preview {

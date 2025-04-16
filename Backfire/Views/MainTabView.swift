@@ -15,6 +15,11 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Dashboard", systemImage: "gauge")
                 }
+            RideHistoryView()
+                .environmentObject(BluetoothManager.shared)
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
             SettingsView()
                 .environmentObject(BluetoothManager.shared)
                 .tabItem {

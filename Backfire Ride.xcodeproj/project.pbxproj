@@ -10,9 +10,22 @@
 		C5B9D91A2DAEFFCC002E2E18 /* Backfire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Backfire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C5AB38032DB0252B00DD32F8 /* Exceptions for "Backfire" folder in "Backfire" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C5B9D9192DAEFFCC002E2E18 /* Backfire */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C5B9D91C2DAEFFCC002E2E18 /* Backfire */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C5AB38032DB0252B00DD32F8 /* Exceptions for "Backfire" folder in "Backfire" target */,
+			);
 			path = Backfire;
 			sourceTree = "<group>";
 		};
@@ -88,7 +101,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C5B9D9152DAEFFCC002E2E18 /* Build configuration list for PBXProject "Backfire" */;
+			buildConfigurationList = C5B9D9152DAEFFCC002E2E18 /* Build configuration list for PBXProject "Backfire Ride" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -259,7 +272,10 @@
 				DEVELOPMENT_TEAM = 7X6L2P522Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Spying on you";
+				INFOPLIST_FILE = Backfire/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app needs a bluetooth connection to connect to your board";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is needed to track your ride, always allow will let the app work when the screen is locked.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to track your rides";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,7 +304,10 @@
 				DEVELOPMENT_TEAM = 7X6L2P522Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Spying on you";
+				INFOPLIST_FILE = Backfire/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app needs a bluetooth connection to connect to your board";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is needed to track your ride, always allow will let the app work when the screen is locked.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to track your rides";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -310,7 +329,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C5B9D9152DAEFFCC002E2E18 /* Build configuration list for PBXProject "Backfire" */ = {
+		C5B9D9152DAEFFCC002E2E18 /* Build configuration list for PBXProject "Backfire Ride" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C5B9D9232DAEFFCE002E2E18 /* Debug */,

@@ -47,6 +47,46 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     
     static let shared = BluetoothManager()
     
+    @Published var isRideActive = false
+    @Published var currentRide: Ride?
+    @Published var rideHistory: [Ride] = []
+    
+    
+    func startNewRide() {
+        currentRide = Ride(
+            startTime: Date(),
+            locations: [],
+            speedData: [],
+            batteryLevels: []
+        )
+        isRideActive = true
+        LocationManager.shared.startTracking()
+    }
+    
+    func stopCurrentRide() {
+        isRideActive = false
+        LocationManager.shared.stopTracking()
+        if var ride = currentRide {
+            ride.endTime = Date()
+            rideHistory.insert(ride, at: 0)
+            saveRideHistory()
+        }
+        currentRide = nil
+    }
+    
+    private func saveRideHistory() {
+        if let data = try? JSONEncoder().encode(rideHistory) {
+            UserDefaults.standard.set(data, forKey: "rideHistory")
+        }
+    }
+    
+    func loadRideHistory() {
+        if let data = UserDefaults.standard.data(forKey: "rideHistory"),
+           let history = try? JSONDecoder().decode([Ride].self, from: data) {
+            rideHistory = history
+        }
+    }
+    
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -188,6 +228,8 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         } else {
             self.lastTime = Date().timeIntervalSince1970  // Reset if not moving
         }
+        
+        
         
         // Update UI with calculated speed and total distance
         self.voltage = voltageVal
